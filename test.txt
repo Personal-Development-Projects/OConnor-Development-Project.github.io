@@ -1,3 +1,8 @@
+{"login": "Personal-Development-Projects",
+  "name": "OConnor-Development-Project.github.io",
+	"number": 1}
+
+
 query testingNew($login: String!, $name: String!, $number: Int!) {
   repositoryOwner(login: $login) {
     repository(name: $name) {
@@ -7,6 +12,15 @@ query testingNew($login: String!, $name: String!, $number: Int!) {
         author {
           login
         }
+        files(first:100){
+          edges{
+            node{
+              path
+              additions
+              deletions
+            }
+          }
+        }
         reviewThreads(first: 100) {
           nodes {
             comments(first: 100) {
@@ -15,6 +29,7 @@ query testingNew($login: String!, $name: String!, $number: Int!) {
                   login
                 }
                 body
+                diffHunk
               }
             }
           }
@@ -82,3 +97,5 @@ query testingNew($login: String!, $name: String!, $number: Int!) {
     }
   }
 }
+
+

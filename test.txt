@@ -1,0 +1,101 @@
+{"login": "Personal-Development-Projects",
+  "name": "OConnor-Development-Project.github.io",
+	"number": 1}
+
+
+query testingNew($login: String!, $name: String!, $number: Int!) {
+  repositoryOwner(login: $login) {
+    repository(name: $name) {
+      pullRequest(number: $number) {
+        title
+        number
+        author {
+          login
+        }
+        files(first:100){
+          edges{
+            node{
+              path
+              additions
+              deletions
+            }
+          }
+        }
+        reviewThreads(first: 100) {
+          nodes {
+            comments(first: 100) {
+              nodes {
+                author {
+                  login
+                }
+                body
+                diffHunk
+              }
+            }
+          }
+        }
+        timelineItems(
+          first: 20
+          
+        ) {
+          nodes {
+            
+            __typename
+            ... on MergedEvent {
+              actor{
+                login
+              }
+            }
+            
+            ... on PullRequestReview {
+              authorAssociation
+              author {
+                login
+                url
+              }
+              body
+              createdAt
+              state
+              resourcePath
+              comments(first: 5) {
+                totalCount
+                nodes {
+                  pullRequestReview {
+                    body
+                  }
+                  author {
+                    login
+                    avatarUrl
+                    url
+                  }
+                  diffHunk
+                  body
+                  originalPosition
+                  path
+                  outdated
+                }
+              }
+            }
+            ... on PullRequestReviewThread {
+              isResolved
+              viewerCanResolve
+              viewerCanUnresolve
+              comments(first: 5) {
+                nodes {
+                  body
+                  author {
+                    login
+                    url
+                    avatarUrl
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
